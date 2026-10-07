@@ -1,0 +1,341 @@
+<!-- Created by Erion Nezha — © 2026 All rights reserved -->
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sondazhe — Erion Nezha</title>
+<meta name="description" content="Krijo sondazhin tënd, voto dhe shiko rezultatet me grafik të animuar në kohë reale.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style id="appcss">
+/* ============ ERION NEZHA · ULTRA-PREMIUM THEME (shared) ============ */
+:root{
+  --bg0:#070b16; --bg1:#0b1124; --gold:#D4AF37; --gold2:#f3dd8f;
+  --ink:#eef1f7; --mut:#9aa3b8; --glass:rgba(255,255,255,.055);
+  --line:rgba(212,175,55,.22); --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  background:var(--bg0); color:var(--ink); min-height:100vh; overflow-x:hidden;
+}
+.bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg-orbs span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:drift 14s ease-in-out infinite alternate}
+.bg-orbs span:nth-child(1){width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle,#D4AF37,transparent 65%)}
+.bg-orbs span:nth-child(2){width:620px;height:620px;right:-180px;top:30%;background:radial-gradient(circle,#2b3f8f,transparent 65%);animation-delay:-5s}
+.bg-orbs span:nth-child(3){width:460px;height:460px;left:20%;bottom:-160px;background:radial-gradient(circle,#6b4fa1,transparent 65%);animation-delay:-9s}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.12)}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.site-header{padding:64px 0 30px;text-align:center}
+.overline{letter-spacing:.42em;font-size:11px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.site-header h1{font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.15;
+  background:linear-gradient(120deg,#fff 20%,var(--gold2) 55%,var(--gold) 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.site-header p{color:var(--mut);max-width:640px;margin:14px auto 0;font-size:16px;line-height:1.65}
+.live-badge{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:8px 18px;border-radius:999px;
+  border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);font-size:13px;color:var(--gold2);letter-spacing:.08em}
+.live-badge i{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 12px #3ddc84;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.demo-wrap{margin:26px 0 54px}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);padding:30px}
+.code-section{margin:0 0 60px}
+.code-section h2{font-size:24px;margin-bottom:6px}
+.code-section .sub{color:var(--mut);font-size:14px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0;align-items:center}
+.ctab{padding:10px 22px;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;cursor:pointer;
+  background:rgba(255,255,255,.03);color:var(--mut);font-size:14px;font-weight:600;letter-spacing:.04em;transition:.25s}
+.ctab.active{background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.06));color:var(--gold2)}
+.ctab:hover{color:var(--ink)}
+#copyBtn{margin-left:auto;padding:9px 20px;border-radius:10px;border:1px solid var(--line);cursor:pointer;
+  background:linear-gradient(120deg,var(--gold),#a8842a);color:#0a0e1a;font-weight:700;font-size:13px;transition:.25s}
+#copyBtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(212,175,55,.35)}
+.codebox{border:1px solid var(--line);border-radius:0 14px 14px 14px;overflow:hidden;background:#0d1326}
+.codebox pre{margin:0;max-height:560px;overflow:auto}
+.codebox pre code{display:block;padding:22px;font-family:"Cascadia Code","Fira Code",Consolas,monospace;font-size:13.5px;line-height:1.7;background:transparent}
+.codebox pre::-webkit-scrollbar{width:10px;height:10px}
+.codebox pre::-webkit-scrollbar-thumb{background:rgba(212,175,55,.35);border-radius:8px}
+footer{text-align:center;padding:34px 20px 44px;color:var(--mut);font-size:14px;border-top:1px solid rgba(212,175,55,.14)}
+footer strong{color:var(--gold2)}
+/* ============ APP CSS (per projekt) ============ */
+.sv-head{text-align:center;margin-bottom:20px}
+.sv-title{font-size:26px;margin-bottom:8px}
+.sv-note{color:var(--mut);font-size:14px}
+.sv-tabs{display:flex;gap:10px;justify-content:center;margin-bottom:22px}
+.sv-tab{padding:11px 30px;border-radius:12px;border:1px solid var(--line);cursor:pointer;font-size:15px;font-weight:700;
+  background:rgba(255,255,255,.04);color:var(--mut);transition:.25s}
+.sv-tab.active{background:linear-gradient(120deg,rgba(212,175,55,.35),rgba(212,175,55,.12));color:var(--gold2);border-color:var(--gold)}
+.sv-tab:hover{color:var(--ink)}
+.sv-card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;
+  animation:svpop .3s ease}
+@keyframes svpop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.sv-q{font-size:18px;font-weight:800;margin-bottom:4px}
+.sv-meta{font-size:13px;color:var(--mut);margin-bottom:14px}
+.sv-opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.sv-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.08);transition:.2s;font-size:15px}
+.sv-opt:hover{border-color:var(--line);background:rgba(212,175,55,.07)}
+.sv-opt input{accent-color:#D4AF37;width:17px;height:17px;cursor:pointer}
+.sv-vote{padding:10px 28px;border-radius:10px;border:none;cursor:pointer;font-weight:800;font-size:14px;
+  background:linear-gradient(120deg,#D4AF37,#a8842a);color:#0a0e1a;transition:.2s}
+.sv-vote:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 22px rgba(212,175,55,.35)}
+.sv-vote:disabled{opacity:.35;cursor:not-allowed}
+.sv-del{margin-left:10px;padding:10px 18px;border-radius:10px;border:1px solid var(--line);background:none;
+  color:var(--mut);cursor:pointer;font-size:13.5px;font-weight:600;transition:.2s}
+.sv-del:hover{color:#ef4444;border-color:#ef4444;background:rgba(239,68,68,.08)}
+.sv-res{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.sv-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.sv-row .sv-ot{font-size:14.5px;font-weight:600}
+.sv-row .sv-pc{font-size:13.5px;color:var(--gold2);font-weight:800}
+.sv-bar{grid-column:1/-1;height:14px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;position:relative}
+.sv-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#a8842a,#D4AF37,#f3dd8f);
+  transition:width 1s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(212,175,55,.5)}
+.sv-fill.mine{background:linear-gradient(90deg,#2b7a4b,#3ddc84);box-shadow:0 0 12px rgba(61,220,132,.5)}
+.sv-votednote{font-size:13.5px;color:#3ddc84;font-weight:600;margin-bottom:12px}
+.sv-empty{text-align:center;color:var(--mut);padding:40px 10px;font-size:15px;line-height:1.7}
+.sv-field{display:flex;flex-direction:column;gap:9px;margin-bottom:18px;font-size:14px;color:var(--mut);font-weight:600}
+.sv-field input[type=text]{padding:12px 15px;border-radius:10px;border:1px solid var(--line);
+  background:rgba(255,255,255,.05);color:var(--ink);font-size:15px;outline:none;transition:.2s}
+.sv-field input[type=text]:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.18)}
+.sv-optrow{display:flex;gap:9px}
+.sv-optrow input{flex:1}
+.sv-rmopt{padding:0 14px;border-radius:10px;border:1px solid var(--line);background:none;color:var(--mut);
+  cursor:pointer;font-size:16px;transition:.2s}
+.sv-rmopt:hover{color:#ef4444;border-color:#ef4444}
+.sv-rmopt:disabled{opacity:.3;cursor:not-allowed}
+.sv-btn{padding:10px 20px;border-radius:10px;border:1px solid var(--line);cursor:pointer;font-size:14px;font-weight:700;
+  background:rgba(255,255,255,.05);color:var(--ink);transition:.2s}
+.sv-btn:hover{background:rgba(212,175,55,.15)}
+.sv-btn.sv-gold{background:linear-gradient(120deg,#D4AF37,#a8842a);color:#0a0e1a;border:none}
+.sv-btn.sv-gold:hover{box-shadow:0 8px 22px rgba(212,175,55,.35);transform:translateY(-2px)}
+.sv-btn.sv-big{width:100%;padding:14px;font-size:16px}
+.sv-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.sv-err{color:#ef4444;font-size:14px;font-weight:600;background:rgba(239,68,68,.1);
+  border:1px solid rgba(239,68,68,.4);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+@media(max-width:640px){.glass{padding:20px}.site-header{padding:44px 0 22px}}
+</style>
+</head>
+<body>
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+
+<header class="site-header wrap">
+  <div class="overline">Erion Nezha · Web Projects</div>
+  <h1>Sondazhe</h1>
+  <p>Krijo sondazhin tënd, voto dhe shiko rezultatet me grafik të animuar në kohë reale.</p>
+  <div class="live-badge"><i></i> LIVE DEMO</div>
+</header>
+
+<main class="wrap">
+  <section class="demo-wrap">
+    <div class="glass" id="demo">
+<div class="sv-head">
+  <h2 class="sv-title">📊 Sondazhe</h2>
+  <p class="sv-note">Demo lokale — sondazhet dhe votat ruhen vetëm në shfletuesin tënd.</p>
+</div>
+<div class="sv-tabs">
+  <button class="sv-tab active" id="svTabList">📊 Sondazhet</button>
+  <button class="sv-tab" id="svTabNew">➕ Krijo</button>
+</div>
+<div class="sv-view" id="svListView">
+  <div id="svList"></div>
+</div>
+<div class="sv-view" id="svNewView" hidden>
+  <div class="sv-card">
+    <label class="sv-field"><span>Pyetja e sondazhit</span>
+      <input type="text" id="svQ" maxlength="140" placeholder="p.sh. Cili është filmi yt i preferuar?">
+    </label>
+    <div class="sv-field"><span>Opsionet (2–6)</span>
+      <div id="svOpts"></div>
+      <button class="sv-btn sv-ghost" id="svAddOpt">＋ Shto opsion</button>
+    </div>
+    <p class="sv-err" id="svErr" hidden></p>
+    <button class="sv-btn sv-gold sv-big" id="svPublish">📢 Publiko sondazhin</button>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section class="code-section">
+    <h2>💻 Kodi Burim</h2>
+    <p class="sub">I gjithë kodi i këtij projekti — i lexueshëm, i kopjueshëm, gati për t'u mësuar.</p>
+    <div class="tabs">
+      <button class="ctab active" data-tab="html">HTML</button>
+      <button class="ctab" data-tab="css">CSS</button>
+      <button class="ctab" data-tab="js">JavaScript</button>
+      <button id="copyBtn">Kopjo kodin</button>
+    </div>
+    <div class="codebox"><pre><code id="codeView" class="language-html"></code></pre></div>
+  </section>
+</main>
+
+<footer>Krijuar nga <strong>Erion Nezha</strong> · © 2026 — Të gjitha të drejtat e rezervuara</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="appjs">
+(function(){
+  var KEY='surveyapp_polls_v1';
+  var polls=null;
+  try{polls=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){polls=null;}
+  if(!Array.isArray(polls)){
+    polls=[
+      {id:1,q:'Cila është stina jote e preferuar?',voted:null,
+       options:[{t:'Pranverë \uD83C\uDF38',v:12},{t:'Verë \u2600\uFE0F',v:25},{t:'Vjeshtë \uD83C\uDF42',v:8},{t:'Dimër \u2744\uFE0F',v:5}]},
+      {id:2,q:'Çfarë pije preferon në mëngjes?',voted:null,
+       options:[{t:'Kafe \u2615',v:30},{t:'Çaj \uD83C\uDF75',v:10},{t:'Lëng portokalli \uD83C\uDF4A',v:7}]}
+    ];
+    save();
+  }
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(polls));}catch(e){}}
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function total(p){return p.options.reduce(function(a,o){return a+o.v;},0);}
+
+  var listEl=document.getElementById('svList');
+  function render(){
+    listEl.innerHTML='';
+    if(!polls.length){
+      listEl.innerHTML='<div class="sv-empty">Ende asnjë sondazh.<br>Krijo të parin te tab-i "➕ Krijo"! \uD83D\uDC46</div>';
+      return;
+    }
+    polls.forEach(function(p){
+      var card=document.createElement('div');
+      card.className='sv-card';
+      var t=total(p);
+      var html='<div class="sv-q">'+esc(p.q)+'</div>'+
+               '<div class="sv-meta">'+t+' vota gjithsej</div>';
+      if(p.voted===null){
+        html+='<div class="sv-opts">';
+        p.options.forEach(function(o,i){
+          html+='<label class="sv-opt"><input type="radio" name="sv_'+p.id+'" value="'+i+'"><span>'+esc(o.t)+'</span></label>';
+        });
+        html+='</div><button class="sv-vote" disabled>Voto</button>'+
+              '<button class="sv-del">🗑️ Fshi</button>';
+      }else{
+        html+='<div class="sv-votednote">✓ Votove për: '+esc(p.options[p.voted].t)+'</div><div class="sv-res">';
+        p.options.forEach(function(o,i){
+          var pc=t?Math.round(o.v/t*100):0;
+          html+='<div class="sv-row"><span class="sv-ot">'+esc(o.t)+'</span>'+
+                '<span class="sv-pc">'+pc+'% · '+o.v+' vota</span>'+
+                '<div class="sv-bar"><div class="sv-fill'+(i===p.voted?' mine':'')+'" data-w="'+pc+'"></div></div></div>';
+        });
+        html+='</div><button class="sv-del">🗑️ Fshi sondazhin</button>';
+      }
+      card.innerHTML=html;
+      if(p.voted===null){
+        var voteBtn=card.querySelector('.sv-vote');
+        card.querySelectorAll('input[type=radio]').forEach(function(r){
+          r.addEventListener('change',function(){voteBtn.disabled=false;});
+        });
+        voteBtn.addEventListener('click',function(){
+          var sel=card.querySelector('input[type=radio]:checked');
+          if(!sel)return;
+          p.voted=parseInt(sel.value,10);
+          p.options[p.voted].v++;
+          save();render();
+        });
+      }else{
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            card.querySelectorAll('.sv-fill').forEach(function(f){
+              f.style.width=f.dataset.w+'%';
+            });
+          });
+        });
+      }
+      card.querySelector('.sv-del').addEventListener('click',function(){
+        if(!confirm('Të fshihet ky sondazh?'))return;
+        polls=polls.filter(function(x){return x.id!==p.id;});
+        save();render();
+      });
+      listEl.appendChild(card);
+    });
+  }
+
+  var tabList=document.getElementById('svTabList'),tabNew=document.getElementById('svTabNew'),
+      listView=document.getElementById('svListView'),newView=document.getElementById('svNewView');
+  function showTab(which){
+    var isList=which==='list';
+    tabList.classList.toggle('active',isList);
+    tabNew.classList.toggle('active',!isList);
+    listView.hidden=!isList;newView.hidden=isList;
+  }
+  tabList.addEventListener('click',function(){showTab('list');});
+  tabNew.addEventListener('click',function(){showTab('new');});
+
+  var optsEl=document.getElementById('svOpts'),
+      qEl=document.getElementById('svQ'),
+      errEl=document.getElementById('svErr'),
+      addBtn=document.getElementById('svAddOpt');
+  function addOptRow(val){
+    var n=optsEl.children.length;
+    if(n>=6)return;
+    var row=document.createElement('div');
+    row.className='sv-optrow';
+    row.innerHTML='<input type="text" maxlength="60" placeholder="Opsioni '+(n+1)+'" value="'+esc(val||'')+'">'+
+                  '<button class="sv-rmopt" title="Hiq opsionin">✖</button>';
+    row.querySelector('.sv-rmopt').addEventListener('click',function(){
+      row.remove();renumberOpts();
+    });
+    optsEl.appendChild(row);
+    renumberOpts();
+  }
+  function renumberOpts(){
+    var rows=optsEl.children;
+    for(var i=0;i<rows.length;i++){
+      rows[i].querySelector('input').placeholder='Opsioni '+(i+1);
+      rows[i].querySelector('.sv-rmopt').disabled=rows.length<=2;
+    }
+    addBtn.disabled=rows.length>=6;
+  }
+  addBtn.addEventListener('click',function(){addOptRow('');});
+  addOptRow('');addOptRow('');
+
+  function showErr(msg){errEl.textContent=msg;errEl.hidden=false;}
+  document.getElementById('svPublish').addEventListener('click',function(){
+    errEl.hidden=true;
+    var q=qEl.value.trim();
+    var vals=[];
+    optsEl.querySelectorAll('input').forEach(function(i){
+      var v=i.value.trim();if(v)vals.push(v);
+    });
+    if(!q){showErr('⚠️ Shkruaj pyetjen e sondazhit.');qEl.focus();return;}
+    if(vals.length<2){showErr('⚠️ Duhen të paktën 2 opsione me tekst.');return;}
+    polls.unshift({id:Date.now(),q:q,voted:null,
+      options:vals.slice(0,6).map(function(v){return {t:v,v:0};})});
+    save();
+    qEl.value='';optsEl.innerHTML='';addOptRow('');addOptRow('');
+    showTab('list');render();
+  });
+
+  render();
+})();
+</script>
+<script>
+(function(){
+  var tabs={
+    html:{lang:"html",get:function(){return document.getElementById("demo").innerHTML.trim();}},
+    css:{lang:"css",get:function(){return document.getElementById("appcss").textContent.trim();}},
+    js:{lang:"javascript",get:function(){return document.getElementById("appjs").textContent.trim();}}
+  };
+  var view=document.getElementById("codeView"),cur="html";
+  function render(){
+    view.textContent=tabs[cur].get();
+    view.className="language-"+tabs[cur].lang;
+    if(window.hljs){delete view.dataset.highlighted;hljs.highlightElement(view);}
+    var bs=document.querySelectorAll(".ctab");
+    for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i].dataset.tab===cur);
+  }
+  var bs=document.querySelectorAll(".ctab");
+  for(var i=0;i<bs.length;i++)bs[i].addEventListener("click",function(){cur=this.dataset.tab;render();});
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var b=this,code=tabs[cur].get();
+    function done(t){b.textContent=t;setTimeout(function(){b.textContent="Kopjo kodin";},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(function(){done("U kopjua ✓");},function(){done("Dështoi");});}
+    else{var ta=document.createElement("textarea");ta.value=code;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done("U kopjua ✓");}catch(e){done("Dështoi");}document.body.removeChild(ta);}
+  });
+  render();
+})();
+</script>
+</body>
+</html>
